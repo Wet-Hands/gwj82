@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cgdvnnycwbwsg"]
+[gd_scene load_steps=12 format=3 uid="uid://cgdvnnycwbwsg"]
 
 [ext_resource type="Script" uid="uid://c18dek505bfn4" path="res://player/player.gd" id="1_oul6g"]
 [ext_resource type="Shader" uid="uid://b6dpbg4312g7i" path="res://player/vhs.gdshader" id="2_rkbax"]
@@ -8,8 +8,6 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kqu6x"]
 radius = 0.4
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yw30f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qjkh3"]
 
@@ -68,8 +66,8 @@ offset_top = 10.0
 offset_right = 167.0
 offset_bottom = 33.0
 theme = ExtResource("2_yw30f")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_yw30f")
-text = "STARSHIP #849"
+theme_override_colors/font_color = Color(1, 0.741176, 0, 1)
+text = "STARSHIP #849 UNSEEN FOOTAGE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
