@@ -1,0 +1,121 @@
+[gd_scene load_steps=13 format=3 uid="uid://cgdvnnycwbwsg"]
+
+[ext_resource type="Script" uid="uid://c18dek505bfn4" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="Shader" uid="uid://b6dpbg4312g7i" path="res://player/vhs.gdshader" id="2_rkbax"]
+[ext_resource type="Theme" uid="uid://c5a7qoe868646" path="res://player/assets/player.theme" id="2_yw30f"]
+[ext_resource type="AudioStream" uid="uid://dx0m2rks5hxfd" path="res://player/assets/sfx/footstep_metal_a_2.mp3" id="4_yw30f"]
+[ext_resource type="Texture2D" uid="uid://dhva3stffbndv" path="res://player/assets/crosshair001.png" id="5_qjkh3"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kqu6x"]
+radius = 0.4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yw30f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qjkh3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g6k8r"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rkbax"]
+frequency = 0.0032
+fractal_type = 3
+fractal_gain = 1.455
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_g1dw6"]
+noise = SubResource("FastNoiseLite_rkbax")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g1dw6"]
+shader = ExtResource("2_rkbax")
+shader_parameter/vhs_resolution = Vector2(320, 240)
+shader_parameter/samples = 2
+shader_parameter/crease_noise = 1.0
+shader_parameter/crease_opacity = 0.5
+shader_parameter/filter_intensity = 0.1
+shader_parameter/tape_crease_smear = 0.2
+shader_parameter/tape_crease_intensity = 0.2
+shader_parameter/tape_crease_jitter = 0.1
+shader_parameter/tape_crease_speed = 0.5
+shader_parameter/tape_crease_discoloration = 1.0
+shader_parameter/bottom_border_thickness = 6.0
+shader_parameter/bottom_border_jitter = 6.0
+shader_parameter/noise_intensity = 0.1
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_g1dw6")
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("cam", "head")]
+script = ExtResource("1_oul6g")
+cam = NodePath("Head/Camera3D")
+head = NodePath("Head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_kqu6x")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Head/Camera3D"]
+visible = false
+
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D"]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -2)
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Label" type="Label" parent="Head/Camera3D"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 167.0
+offset_bottom = 33.0
+theme = ExtResource("2_yw30f")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_yw30f")
+text = "STARSHIP #849"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Head/Camera3D"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -50.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Date" type="Label" parent="Head/Camera3D/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_yw30f")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qjkh3")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Time" type="Label" parent="Head/Camera3D/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_yw30f")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_g6k8r")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="Head/Camera3D"]
+material = SubResource("ShaderMaterial_g1dw6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.894741, 0)
+stream = ExtResource("4_yw30f")
+unit_size = 0.5
+
+[node name="Crosshair001" type="Sprite2D" parent="."]
+position = Vector2(360, 240)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_qjkh3")
